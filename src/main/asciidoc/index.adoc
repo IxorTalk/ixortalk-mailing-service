@@ -1,0 +1,31 @@
+= IxorTalk Mailing Service
+:doctype: book
+:icons: font
+:toc: left
+:toclevels: 4
+:sectlinks:
+:source-highlighter: highlightjs
+
+= Mail
+
+== Send Mail
+
+Rest call to send an outgoing email
+
+=== Request
+
+Via curl:
+include::{snippets}/mailing/send/success/curl-request.adoc[]
+
+HTTP request:
+include::{snippets}/mailing/send/success/http-request.adoc[]
+
+==== Request Headers
+include::{snippets}/mailing/send/success/request-headers.adoc[]
+
+==== Request Fields
+include::{snippets}/mailing/send/success/request-fields.adoc[]
+
+=== Response
+
+include::{snippets}/mailing/send/success/http-response.adoc[]

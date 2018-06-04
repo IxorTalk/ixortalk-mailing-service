@@ -33,7 +33,7 @@
 
     <name>ixortalk-mailing-service</name>
     <description>IxorTalk microservice for sending e-mails</description>
-    <url>https://github.com/ixortalkadmin/ixortalk-mailing-service/tree/master</url>
+    <url>https://github.com/ixortalk/ixortalk-mailing-service/tree/master</url>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -88,7 +88,7 @@
     <scm>
         <connection>scm:git:git@github.com:ixortalkadmin/ixortalk-mailing-service.git</connection>
         <developerConnection>scm:git:git@github.com:ixortalkadmin/ixortalk-mailing-service.git</developerConnection>
-        <url>https://github.com/ixortalkadmin/ixortalk-mailing-service/tree/master</url>
+        <url>https://github.com/ixortalk/ixortalk-mailing-service/tree/master</url>
         <tag>HEAD</tag>
     </scm>
 

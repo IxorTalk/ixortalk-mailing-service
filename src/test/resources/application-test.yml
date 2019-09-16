@@ -31,6 +31,14 @@ ixortalk:
   messages:
     basename: classpath:i18n/test-messages
 
+  auth0:
+    domain: ixortalk-auth0-test-domain.com
+
+security:
+  oauth2:
+    resource:
+      id: configured-resource-id
+
 spring:
   mail:
     host: localhost

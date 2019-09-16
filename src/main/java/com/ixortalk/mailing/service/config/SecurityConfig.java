@@ -23,18 +23,30 @@
  */
 package com.ixortalk.mailing.service.config;
 
+import com.auth0.spring.security.api.JwtWebSecurityConfigurer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
-import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import static java.lang.String.format;
+
+@EnableWebSecurity
 @Configuration
-@EnableResourceServer
-public class ResourceServer extends ResourceServerConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Value(value = "${security.oauth2.resource.id}")
+    private String audience;
+
+    @Value(value = "${ixortalk.auth0.domain}")
+    private String auth0Domain;
 
     @Override
-    public void configure(HttpSecurity http) throws Exception {
-        http
+    protected void configure(HttpSecurity http) throws Exception {
+        JwtWebSecurityConfigurer
+                .forRS256(audience, format("https://%s/", auth0Domain))
+                .configure(http)
                 .authorizeRequests()
                 .anyRequest().authenticated();
     }

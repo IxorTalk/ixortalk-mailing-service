@@ -51,7 +51,7 @@
         <prometheus.simpleclient.version>0.0.22</prometheus.simpleclient.version>
         <ixortalk-test.version>1.0.0</ixortalk-test.version>
         <ixortalk-util.version>1.0.2</ixortalk-util.version>
-        <ixortalk-oauth2-spring-boot-starter.version>0.0.1</ixortalk-oauth2-spring-boot-starter.version>
+        <ixortalk-oauth2-spring-boot-starter.version>0.0.2</ixortalk-oauth2-spring-boot-starter.version>
     </properties>
 
     <organization>

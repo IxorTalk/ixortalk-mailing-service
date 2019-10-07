@@ -29,7 +29,7 @@
 
     <groupId>com.ixortalk</groupId>
     <artifactId>ixortalk-mailing-service</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
 
     <name>ixortalk-mailing-service</name>
     <description>IxorTalk microservice for sending e-mails</description>
@@ -90,7 +90,7 @@
         <connection>scm:git:git@github.com:ixortalk/ixortalk-mailing-service.git</connection>
         <developerConnection>scm:git:git@github.com:ixortalk/ixortalk-mailing-service.git</developerConnection>
         <url>https://github.com/ixortalk/ixortalk-mailing-service/tree/master</url>
-        <tag>HEAD</tag>
+        <tag>ixortalk-mailing-service-1.0.1</tag>
     </scm>
 
     <distributionManagement>

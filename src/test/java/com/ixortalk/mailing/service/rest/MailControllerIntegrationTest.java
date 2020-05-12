@@ -33,9 +33,8 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.Map;
 
-import static com.ixortalk.test.oauth2.OAuth2TestTokens.adminToken;
-import static com.jayway.restassured.RestAssured.given;
-import static com.jayway.restassured.http.ContentType.JSON;
+import static io.restassured.RestAssured.given;
+import static io.restassured.http.ContentType.JSON;
 import static java.net.HttpURLConnection.HTTP_OK;
 import static java.util.Collections.singletonMap;
 import static javax.mail.Message.RecipientType.TO;
@@ -52,7 +51,7 @@ public class MailControllerIntegrationTest extends AbstractSpringIntegrationTest
     @Test
     public void success() throws MessagingException, JsonProcessingException {
         given()
-                .auth().preemptive().oauth2(adminToken().getValue())
+                .auth().preemptive().oauth2(ADMIN_JWT_TOKEN)
                 .when()
                 .body(objectMapper.writeValueAsString(new SendMailVO(TO_EMAIL, LANGUAGE_TAG_NL, TEST_MESSAGE_KEY, TEST_TEMPLATE, ADDITIONAL_VARIABLES)))
                 .contentType(JSON)

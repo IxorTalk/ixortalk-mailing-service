@@ -23,20 +23,18 @@
  */
 package com.ixortalk.mailing.service;
 
-import com.jayway.restassured.builder.RequestSpecBuilder;
-import com.jayway.restassured.specification.RequestSpecification;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.specification.RequestSpecification;
 import org.junit.Before;
 import org.junit.Rule;
 import org.springframework.restdocs.JUnitRestDocumentation;
 import org.springframework.restdocs.headers.HeaderDescriptor;
-import org.springframework.restdocs.restassured.operation.preprocess.UriModifyingOperationPreprocessor;
+import org.springframework.restdocs.operation.preprocess.UriModifyingOperationPreprocessor;
 
-import static com.google.common.net.HttpHeaders.X_FORWARDED_HOST;
-import static com.google.common.net.HttpHeaders.X_FORWARDED_PORT;
-import static com.google.common.net.HttpHeaders.X_FORWARDED_PROTO;
+import static com.google.common.net.HttpHeaders.*;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
-import static org.springframework.restdocs.restassured.RestAssuredRestDocumentation.documentationConfiguration;
-import static org.springframework.restdocs.restassured.operation.preprocess.RestAssuredPreprocessors.modifyUris;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.modifyUris;
+import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.documentationConfiguration;
 
 public class AbstractRestDocTest extends AbstractSpringIntegrationTest {
 

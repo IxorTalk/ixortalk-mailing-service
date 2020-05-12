@@ -23,20 +23,14 @@
  */
 package com.ixortalk.mailing.service;
 
-import io.prometheus.client.spring.boot.EnablePrometheusEndpoint;
-import io.prometheus.client.spring.boot.EnableSpringBootMetricsCollector;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.context.MessageSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.context.MessageSourceAutoConfiguration;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = MessageSourceAutoConfiguration.class)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@EnablePrometheusEndpoint
-@EnableSpringBootMetricsCollector
-@EnableAutoConfiguration(exclude = {MessageSourceAutoConfiguration.class})
 @EnableAsync
 public class MailingServiceApplication {
 

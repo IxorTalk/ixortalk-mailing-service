@@ -23,7 +23,8 @@
 #
 
 server:
-  context-path: /mailing
+  servlet:
+    context-path: /mailing
 
 ixortalk:
   mail:
@@ -37,4 +38,9 @@ spring:
     port: 3025
   thymeleaf:
     prefix: classpath:templates/
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://dummy
 

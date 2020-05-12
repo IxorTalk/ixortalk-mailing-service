@@ -24,7 +24,6 @@
 package com.ixortalk.mailing.service.send;
 
 import com.ixortalk.mailing.service.config.IxortalkConfigProperties;
-import org.apache.commons.codec.CharEncoding;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -33,12 +32,13 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.thymeleaf.context.Context;
-import org.thymeleaf.spring4.SpringTemplateEngine;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.mail.internet.MimeMessage;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Locale.forLanguageTag;
 
 @Named
@@ -65,7 +65,7 @@ public class SendMailService {
 
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {
-            MimeMessageHelper message = new MimeMessageHelper(mimeMessage, isMultipart, CharEncoding.UTF_8);
+            MimeMessageHelper message = new MimeMessageHelper(mimeMessage, isMultipart, UTF_8.name());
             message.setTo(to);
             message.setFrom(ixortalkConfigProperties.getMail().getFrom());
             message.setSubject(subject);

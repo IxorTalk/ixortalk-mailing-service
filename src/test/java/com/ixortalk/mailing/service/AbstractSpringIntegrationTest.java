@@ -25,14 +25,16 @@ package com.ixortalk.mailing.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.icegreen.greenmail.junit.GreenMailRule;
-import com.ixortalk.test.oauth2.OAuth2EmbeddedTestServer;
-import com.jayway.restassured.RestAssured;
+import io.restassured.RestAssured;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.rules.SpringClassRule;
@@ -40,15 +42,20 @@ import org.springframework.test.context.junit4.rules.SpringMethodRule;
 
 import javax.inject.Inject;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static com.icegreen.greenmail.util.ServerSetupTest.SMTP;
-import static com.jayway.restassured.config.ObjectMapperConfig.objectMapperConfig;
-import static com.jayway.restassured.config.RestAssuredConfig.config;
+import static com.ixortalk.test.util.Randomizer.nextString;
+import static io.restassured.config.ObjectMapperConfig.objectMapperConfig;
+import static io.restassured.config.RestAssuredConfig.config;
+import static org.mockito.Mockito.when;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
-@SpringBootTest(classes = {MailingServiceApplication.class, OAuth2EmbeddedTestServer.class}, webEnvironment = RANDOM_PORT)
+@SpringBootTest(classes = MailingServiceApplication.class, webEnvironment = RANDOM_PORT)
 @ActiveProfiles("test")
 @WithMockUser(roles = "ADMIN")
 public abstract class AbstractSpringIntegrationTest {
+
+    public static final String ADMIN_JWT_TOKEN = nextString("adminJwtToken");
 
     @ClassRule
     public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
@@ -59,13 +66,16 @@ public abstract class AbstractSpringIntegrationTest {
     @Rule
     public final GreenMailRule greenMail = new GreenMailRule(SMTP);
 
+    @MockBean
+    protected JwtDecoder jwtDecoder;
+
     @Inject
     protected ObjectMapper objectMapper;
 
     @LocalServerPort
     protected int port;
 
-    @Value("${server.context-path}")
+    @Value("${server.servlet.context-path}")
     protected String contextPath;
 
     @Before
@@ -73,5 +83,18 @@ public abstract class AbstractSpringIntegrationTest {
         RestAssured.port = port;
         RestAssured.basePath = contextPath;
         RestAssured.config = config().objectMapperConfig(objectMapperConfig().jackson2ObjectMapperFactory((cls, charset) -> objectMapper));
+    }
+
+    @Before
+    public void jwtSetUp() {
+        when(jwtDecoder.decode(ADMIN_JWT_TOKEN)).thenReturn(buildJwtToken(ADMIN_JWT_TOKEN, null, "admin", "ROLE_ADMIN"));
+    }
+
+    public static Jwt buildJwtToken(String jwtToken, String subject, String... roles) {
+        return Jwt.withTokenValue(jwtToken)
+                .header("alg", "none")
+                .subject(subject)
+                .claim("scope", newArrayList(roles))
+                .build();
     }
 }
